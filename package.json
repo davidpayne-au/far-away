@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "prebuild": "node scripts/generate-version-file.mjs",
+    "build": "npm run prebuild && tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "NODE_OPTIONS='--no-deprecation' vitest run --exclude=tests/**/*.spec.ts",

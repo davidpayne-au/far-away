@@ -52,6 +52,32 @@ This solution is using 'axe-core' to test the accessibility of the react app.
 We are also using 'normalize.css' to help with the styling of the react app.
 <https://necolas.github.io/normalize.css>
 
+### Build version metadata (GitHub Pages)
+
+Because GitHub Pages serves only static assets, runtime API routes like `/api/version` are not available. To display the application version on the About page, a build step generates a static file at `public/api/version.json` containing:
+
+```json
+{
+  "version": "<package.json version>",
+  "timestamp": "<ISO build time>",
+  "build": "<GitHub run number>",
+  "commit": "<Git SHA>"
+}
+```
+
+Implementation details:
+- Script: `scripts/generate-version-file.mjs` runs automatically via the `prebuild` NPM script.
+- The hook `useVersion` fetches `import.meta.env.BASE_URL + 'api/version.json'` so it works regardless of the GitHub Pages repository sub-path.
+- If the file can't be loaded, an error message is shown and a console error is logged.
+
+To regenerate manually you can run:
+
+```
+npm run prebuild
+```
+
+This strategy avoids needing a server while still surfacing build metadata to users.
+
 ## General included notes about this React Typescript Vite Project
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.

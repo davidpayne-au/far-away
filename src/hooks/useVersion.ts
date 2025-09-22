@@ -13,11 +13,19 @@ export const useVersion = () => {
   useEffect(() => {
     const fetchVersion = async () => {
       try {
-        const response = await fetch('/api/version', { method: 'GET' });
-        if (!response.ok) throw new Error('Failed to fetch version');
+        // Ensure we respect the deployed base path (e.g. /<repo-name>/ on GitHub Pages)
+  // Vite exposes import.meta.env.BASE_URL; we also allow fallback to a runtime var VITE_BASE if provided.
+  interface EnvLike { BASE_URL?: string; VITE_BASE?: string }
+  const env: EnvLike = (import.meta as unknown as { env?: EnvLike }).env || {};
+  const base = env.BASE_URL || env.VITE_BASE || '/';
+        // version file is generated at build time to public/api/version.json
+        const url = `${base.replace(/\/$/,'')}/api/version.json`;
+        const response = await fetch(url, { method: 'GET', cache: 'no-cache' });
+        if (!response.ok) throw new Error(`Failed to fetch version: ${response.status}`);
         const data: VersionResponse = await response.json();
         setVersion(data.version);
-      } catch {
+      } catch (err) {
+        console.error('Version fetch failed', err);
         setError('Could not load version info');
       } finally {
         setLoading(false);
