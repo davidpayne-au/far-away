@@ -4,7 +4,7 @@
 
 A simple starter React Typescript Vite project deploying to github pages at
 
-<https://davidpayne.github.io/far-away/>
+<https://davidpayne-au.github.io/far-away/>
 
 This is a React app in typescript created by vite ready for you to customise and extend.
 
