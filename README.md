@@ -47,6 +47,49 @@ This solution is using 'axe-core' to test the accessibility of the react app.
 - [W3C Accessibility](https://www.w3.org/WAI/)
 - [Accessibility Principles](https://www.w3.org/WAI/fundamentals/accessibility-principles/)
 
+## Theme & Accessibility Tokens
+
+The UI uses a cheerful, warm palette defined as CSS custom properties on the `html` element (light + dark) to ensure consistent contrast and easy future theming.
+
+Semantic tokens (light mode values):
+
+| Token | Light | Dark | Purpose / Contrast Notes |
+|-------|-------|------|--------------------------|
+| `--color-bg` | `#fffaf4` | `#0f172a` | App background gradient start. Body text vs bg ≥ 7:1. |
+| `--color-bg-alt` | `#fff3e8` | `#1e293b` | Gradient end / subtle sections. |
+| `--color-surface` | `#ffffff` | `#1e293b` | Main surfaces / cards. |
+| `--color-surface-alt` | `#ffe8d1` | `#24324a` | Accent surface (badges, alt sections). |
+| `--color-border` | `#e2d6cf` | `#334155` | Subtle separators (≥ 3:1 against surface for discernibility). |
+| `--color-text` | `#1a1c1e` | `#f1f5f9` | Primary text (≥ 7:1 on surfaces). |
+| `--color-text-subtle` | `#5a6068` | `#cbd5e1` | Secondary text (≥ 4.5:1 on backgrounds). |
+| `--color-primary` | `#2563eb` | `#60a5fa` | Navigation & primary actions. Contrast vs background & on-button text ≥ 4.5:1. |
+| `--color-secondary` | `#f59e0b` | `#fbbf24` | Badges / highlights with dark text in light mode and dark bg in dark mode for ≥ 4.5:1. |
+| `--color-accent` | `#9333ea` | `#c084fc` | Accent emphasis. |
+| `--color-focus` | `#1d4ed8` | `#93c5fd` | Focus outlines (≥ 3:1 against context per WCAG 2.4.7). |
+| `--color-success` | `#15803d` | `#34d399` | Success messaging. |
+| `--color-warning` | `#b45309` | `#f59e0b` | Warning messaging. |
+| `--color-danger` | `#b91c1c` | `#f87171` | Error messaging. |
+
+Additional a11y considerations:
+
+1. Focus Visibility: All interactive elements rely on `:focus-visible` outlines (`--color-focus`) with sufficient contrast and offset for clear shape recognition.
+2. Reduced Motion: `prefers-reduced-motion: reduce` disables non-essential entrance animation.
+3. Contrast Ratios: Body text aims for ≥ 7:1 (advisory beyond AA). Secondary text maintains ≥ 4.5:1. Large headings may use colors ≥ 3:1 minimally, but current palette exceeds that.
+4. Color Independence: Semantic tokens avoid conveying meaning with hue alone; variants (success/warning/danger) are paired with text and may be extended with icons.
+5. Adaptability: Future themes can override only the token block; components reference tokens rather than hard-coded hex values.
+
+Testing tips:
+```
+npm run dev
+# Use browser dev tools to toggle dark mode class `html.dark` manually or via a theme switch (future enhancement)
+```
+
+Potential future enhancements:
+- Add a theme switcher persisting preference (localStorage + `prefers-color-scheme`).
+- Provide a high-contrast mode (AAA oriented) with `--color-high-*` token overrides.
+- Integrate automated contrast tests using axe assertions in component tests.
+
+
 ## Additional notes
 
 We are also using 'normalize.css' to help with the styling of the react app.
