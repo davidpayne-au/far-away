@@ -14,6 +14,7 @@ const App = () => (
       <nav className="flex gap-4 w-full max-w-5xl mx-auto px-4" aria-label="Primary Navigation">
         <NavLink to="/" end className={navLinkClass} aria-label="Home">Hello</NavLink>
         <NavLink to="/about" className={navLinkClass} aria-label="About">About</NavLink>
+        <NavLink to="/weather" className={navLinkClass} aria-label="Weather">Weather</NavLink>
       </nav>
     </header>
     <main

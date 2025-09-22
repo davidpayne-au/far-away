@@ -8,6 +8,11 @@ describe('App component', () => {
   it('renders the app without errors', () => {
     render(<App />);
   });
+
+  it('shows Weather navigation link', () => {
+    const { getByRole } = render(<App />);
+    expect(getByRole('link', { name: /weather/i })).toBeInTheDocument();
+  });
 });
 
 describe('App accessibility', () => {
