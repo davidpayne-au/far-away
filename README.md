@@ -1,5 +1,11 @@
 # far-away
 
+[![React CI/CD](https://github.com/davidpayne-au/far-away/actions/workflows/cicd.yml/badge.svg)](https://github.com/davidpayne-au/far-away/actions/workflows/cicd.yml)
+
+A simple starter React Typescript Vite project deploying to github pages at
+
+<https://davidpayne.github.io/far-away/>
+
 This is a React app in typescript created by vite ready for you to customise and extend.
 
 It includes:
